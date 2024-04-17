@@ -15,10 +15,10 @@ class User extends Equatable {
   final String uid;
 
   /// The display name associated with the user
-  final String displayName;
+  final String? displayName;
 
   /// The email associated with the user
-  final String email;
+  final String? email;
 
   /// Returns a copy of this `user` with the given values updated.
   User copyWith({
@@ -34,5 +34,5 @@ class User extends Equatable {
   }
 
   @override
-  List<Object> get props => [uid, displayName, email];
+  List<Object> get props => [uid];
 }

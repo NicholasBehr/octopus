@@ -10,9 +10,8 @@ abstract class AuthApi {
 
   /// Provides a [Stream] of user auth updates
   ///
-  /// Returns Either [AuthException] or authenticated [User],
-  /// might be [None]
-  Stream<Either<AuthException, Option<User>>> getUser();
+  /// Returns Either [AuthFailure] or authenticated [User]
+  Stream<Either<AuthFailure, User?>> getUser();
 
   /// Tries to create a new user account
   /// with the given email address and password.
@@ -32,5 +31,24 @@ abstract class AuthApi {
   Future<void> signOut();
 }
 
-/// Error thrown when a [AuthApi] transaction fails.
-class AuthException implements Exception {}
+/// Description of what [AuthApi] transaction failed.
+enum AuthFailure {
+  /// there already exists an account with the given email address
+  emailAlreadyInUse,
+
+  /// the email address is not valid
+  invalidEmail,
+
+  /// the password is not strong enough
+  weakPassword,
+
+  /// the user corresponding to the given email has been disabled
+  userDisabled,
+
+  /// there is no user corresponding to the given email
+  userNotFound,
+
+  /// the password is invalid for the given email,
+  /// or the account corresponding to the email does not have a password set
+  wrongPassword,
+}
