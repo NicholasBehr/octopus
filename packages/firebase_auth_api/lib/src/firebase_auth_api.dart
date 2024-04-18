@@ -38,7 +38,7 @@ class FirebaseAuthApi extends auth_api.AuthApi {
 
   @override
   Stream<Either<auth_api.AuthFailure, auth_api.User?>> getUser() =>
-      _authStreamController;
+      _authStreamController.asBroadcastStream();
 
   @override
   Future<void> createUserWithEmailAndPassword({
