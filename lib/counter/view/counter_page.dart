@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
+import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:octopus/counter/counter.dart';
 import 'package:octopus/l10n/l10n.dart';
 
@@ -36,6 +39,20 @@ class CounterView extends StatelessWidget {
           FloatingActionButton(
             onPressed: () => context.read<CounterCubit>().decrement(),
             child: const Icon(Icons.remove),
+          ),
+          const SizedBox(height: 8),
+          FloatingActionButton(
+            onPressed: () =>
+                context.read<AuthRepository>().signInWithEmailAndPassword(
+                      email: 'test@mail.ch',
+                      password: 'password123',
+                    ),
+            child: const Icon(Icons.verified_user),
+          ),
+          const SizedBox(height: 8),
+          FloatingActionButton(
+            onPressed: () => context.read<AuthRepository>().signOut(),
+            child: const Icon(Icons.exit_to_app),
           ),
         ],
       ),

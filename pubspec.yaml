@@ -7,13 +7,24 @@ environment:
   sdk: "^3.3.0"
 
 dependencies:
-  bloc: ^8.1.3
+  bloc: ^8.1.4
+  firebase_auth: ^4.19.2
+  firebase_core: ^2.30.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.4
   flutter_localizations:
     sdk: flutter
   intl: ^0.18.1
+  auth_repository:
+    path: packages/auth_repository
+  auth_api:
+    path: packages/auth_api
+  firebase_auth_api:
+    path: packages/firebase_auth_api
+  fpdart: ^1.1.0
+  equatable: ^2.0.5
+
 
 dev_dependencies:
   bloc_test: ^9.1.6

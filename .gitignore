@@ -41,6 +41,12 @@ unlinked.ds
 unlinked_spec.ds
 .fvm/
 
+# Firebase related
+**/firebase_options_*.dart
+firebase.json
+**/google-services.json
+**/GoogleService-Info.plist
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
