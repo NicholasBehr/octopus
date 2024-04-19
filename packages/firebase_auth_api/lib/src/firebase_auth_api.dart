@@ -16,19 +16,17 @@ class FirebaseAuthApi extends auth_api.AuthApi {
   final firebase.FirebaseAuth _firebaseAuth;
 
   final _authStreamController =
-      BehaviorSubject<Either<auth_api.AuthFailure, auth_api.User?>>.seeded(
-    Either<auth_api.AuthFailure, auth_api.User?>.of(null),
-  );
+      BehaviorSubject<auth_api.AuthUpdate>.seeded(auth_api.AuthUpdate.of(null));
 
   void _init() {
     _firebaseAuth.authStateChanges().forEach(
           (firebaseUser) => _authStreamController.add(
-            Either<auth_api.AuthFailure, auth_api.User?>.right(
+            auth_api.AuthUpdate.right(
               firebaseUser != null
                   ? auth_api.User(
                       uid: firebaseUser.uid,
-                      displayName: firebaseUser.displayName,
                       email: firebaseUser.email,
+                      displayName: firebaseUser.displayName,
                     )
                   : null,
             ),
@@ -37,7 +35,7 @@ class FirebaseAuthApi extends auth_api.AuthApi {
   }
 
   @override
-  Stream<Either<auth_api.AuthFailure, auth_api.User?>> getUser() =>
+  Stream<Either<auth_api.AuthFailure, auth_api.User?>> getAuthUpdates() =>
       _authStreamController.asBroadcastStream();
 
   @override

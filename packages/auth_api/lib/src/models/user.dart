@@ -3,11 +3,13 @@ import 'package:meta/meta.dart';
 
 @immutable
 class User extends Equatable {
-  User({required this.uid, this.displayName = '', this.email = ''})
-      : assert(
-          uid.isNotEmpty,
-          'uid cannot be empty',
-        );
+  User({
+    required this.uid,
+    String? displayName,
+    String? email,
+  })  : displayName = displayName ?? '',
+        email = email ?? '',
+        assert(uid.isNotEmpty, 'uid cannot be empty');
 
   /// The unique identifier of the user
   ///
@@ -15,16 +17,17 @@ class User extends Equatable {
   final String uid;
 
   /// The display name associated with the user
-  final String? displayName;
+  final String displayName;
 
   /// The email associated with the user
-  final String? email;
+  final String email;
 
   /// Returns a copy of this `user` with the given values updated.
   User copyWith({
     String? uid,
     String? displayName,
     String? email,
+    bool? verified,
   }) {
     return User(
       uid: uid ?? this.uid,
@@ -34,5 +37,5 @@ class User extends Equatable {
   }
 
   @override
-  List<Object> get props => [uid];
+  List<Object> get props => [uid, displayName, email];
 }

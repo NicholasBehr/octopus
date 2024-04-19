@@ -1,6 +1,10 @@
 import 'package:auth_api/auth_api.dart';
 import 'package:fpdart/fpdart.dart';
 
+/// Used to convey changes to auth state,
+/// [User] can be null if signed out
+typedef AuthUpdate = Either<AuthFailure, User?>;
+
 /// {@template auth_api}
 /// The interface and models for an API providing user authentication.
 /// {@endtemplate}
@@ -8,10 +12,8 @@ abstract class AuthApi {
   /// {@macro auth_api}
   const AuthApi();
 
-  /// Provides a [Stream] of user auth updates
-  ///
-  /// Returns Either [AuthFailure] or authenticated [User]
-  Stream<Either<AuthFailure, User?>> getUser();
+  /// Provides a [Stream] of live [AuthUpdate]
+  Stream<AuthUpdate> getAuthUpdates();
 
   /// Tries to create a new user account
   /// with the given email address and password.
