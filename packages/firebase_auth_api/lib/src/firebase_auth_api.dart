@@ -27,6 +27,7 @@ class FirebaseAuthApi extends auth_api.AuthApi {
                       uid: firebaseUser.uid,
                       email: firebaseUser.email,
                       displayName: firebaseUser.displayName,
+                      emailVerified: firebaseUser.emailVerified,
                     )
                   : null,
             ),

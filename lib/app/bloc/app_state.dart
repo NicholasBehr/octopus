@@ -1,19 +1,16 @@
 part of 'app_bloc.dart';
 
-enum AuthStatus {
-  authenticated,
-  unauthenticated,
-}
-
+@immutable
 final class AppState extends Equatable {
-  const AppState({
-    this.status = AuthStatus.unauthenticated,
+  AppState({
     this.user,
-  });
+  })  : isAuthenticated = user != null,
+        isVerified = user?.emailVerified ?? false;
 
-  final AuthStatus status;
   final User? user;
+  final bool isAuthenticated;
+  final bool isVerified;
 
   @override
-  List<Object> get props => [status];
+  List<Object> get props => [isAuthenticated, isVerified];
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,8 @@ import 'package:octopus/l10n/l10n.dart';
 
 class CounterPage extends StatelessWidget {
   const CounterPage({super.key});
+
+  static Page<void> page() => const MaterialPage<void>(child: CounterPage());
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +56,14 @@ class CounterView extends StatelessWidget {
           FloatingActionButton(
             onPressed: () => context.read<AuthRepository>().signOut(),
             child: const Icon(Icons.exit_to_app),
+          ),
+          const SizedBox(height: 8),
+          FloatingActionButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CounterPage()),
+            ),
+            child: const Icon(Icons.add),
           ),
         ],
       ),

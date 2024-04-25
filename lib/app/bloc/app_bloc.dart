@@ -11,7 +11,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({
     required AuthRepository authRepository,
   })  : _authRepository = authRepository,
-        super(const AppState()) {
+        super(AppState()) {
     on<AppAuthUpdateRecieved>(_onAuthUpdateRecieved);
     on<AppSignOutRequested>(_onSignOutRequested);
     _authRepository.getAuthUpdates().forEach(
@@ -27,16 +27,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ) async {
     switch (event.authUpdate) {
       case Right(value: final user):
-        emit(
-          AppState(
-            status: user != null
-                ? AuthStatus.authenticated
-                : AuthStatus.unauthenticated,
-            user: user,
-          ),
-        );
+        emit(AppState(user: user));
       case Left(value: final _):
-        emit(const AppState());
+        emit(AppState());
     }
   }
 

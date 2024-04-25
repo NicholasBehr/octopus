@@ -4,7 +4,7 @@ import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:octopus/app/bloc/app_bloc.dart';
-import 'package:octopus/counter/counter.dart';
+import 'package:octopus/app/routes/routes.dart';
 import 'package:octopus/l10n/l10n.dart';
 
 class App extends StatelessWidget {
@@ -14,14 +14,13 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: authRepository,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthRepository>(create: (context) => authRepository),
+      ],
       child: BlocProvider(
-        create: (_) => AppBloc(
-          authRepository: authRepository,
-        ),
+        create: (_) => AppBloc(authRepository: authRepository),
         child: const AppView(),
-        lazy: false,
       ),
     );
   }
@@ -32,16 +31,24 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        ),
-        useMaterial3: true,
-      ),
+    final appBloc = BlocProvider.of<AppBloc>(context);
+    final appRouter = buildRouter(appBloc: appBloc);
+
+    return MaterialApp.router(
+      // localization
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const CounterPage(),
+
+      // router
+      routeInformationProvider: appRouter.routeInformationProvider,
+      routeInformationParser: appRouter.routeInformationParser,
+      routerDelegate: appRouter.routerDelegate,
+
+      // theme
+      theme: ThemeData(
+        colorSchemeSeed: Colors.deepOrange,
+        useMaterial3: true,
+      ),
     );
   }
 }
