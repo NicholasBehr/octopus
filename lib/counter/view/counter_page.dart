@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 import 'package:auth_repository/auth_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:octopus/counter/counter.dart';
 import 'package:octopus/l10n/l10n.dart';
 

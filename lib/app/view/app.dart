@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:auth_repository/auth_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:octopus/app/bloc/app_bloc.dart';
 import 'package:octopus/app/routes/routes.dart';
 import 'package:octopus/l10n/l10n.dart';
