@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Sign Up')),
-      body: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () =>
             context.read<AuthRepository>().signInWithEmailAndPassword(
                   email: 'test@mail.ch',

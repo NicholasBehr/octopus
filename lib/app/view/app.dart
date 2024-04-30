@@ -29,23 +29,28 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appBloc = BlocProvider.of<AppBloc>(context);
-    final appRouter = buildRouter(appBloc: appBloc);
+    //final appBloc = BlocProvider.of<AppBloc>(context);
+    //final appRouter = buildRouter(appBloc: appBloc);
 
-    return MaterialApp.router(
-      // localization
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+    return BlocListener<AppBloc, AppState>(
+      listener: (context, state) {
+        AppRouter.router.refresh();
+      },
+      child: MaterialApp.router(
+        // localization
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
 
-      // router
-      routeInformationProvider: appRouter.routeInformationProvider,
-      routeInformationParser: appRouter.routeInformationParser,
-      routerDelegate: appRouter.routerDelegate,
+        // router
+        routeInformationProvider: AppRouter.router.routeInformationProvider,
+        routeInformationParser: AppRouter.router.routeInformationParser,
+        routerDelegate: AppRouter.router.routerDelegate,
 
-      // theme
-      theme: ThemeData(
-        colorSchemeSeed: Colors.deepOrange,
-        useMaterial3: true,
+        // theme
+        theme: ThemeData(
+          colorSchemeSeed: Colors.deepOrange,
+          useMaterial3: true,
+        ),
       ),
     );
   }

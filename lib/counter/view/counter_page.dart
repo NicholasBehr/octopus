@@ -32,16 +32,19 @@ class CounterView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FloatingActionButton(
+            heroTag: null,
             onPressed: () => context.read<CounterCubit>().increment(),
             child: const Icon(Icons.add),
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
+            heroTag: null,
             onPressed: () => context.read<CounterCubit>().decrement(),
             child: const Icon(Icons.remove),
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
+            heroTag: null,
             onPressed: () =>
                 context.read<AuthRepository>().signInWithEmailAndPassword(
                       email: 'test@mail.ch',
@@ -51,11 +54,13 @@ class CounterView extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
+            heroTag: null,
             onPressed: () => context.read<AuthRepository>().signOut(),
             child: const Icon(Icons.exit_to_app),
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
+            heroTag: null,
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const CounterPage()),
