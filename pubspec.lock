@@ -95,6 +95,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  cloud_firestore:
+    dependency: transitive
+    description:
+      name: cloud_firestore
+      sha256: "58ea77912e355cfd4e49f858e01d5ab4f99c7181ebd545b3fbeae25d6677dff6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.17.2"
+  cloud_firestore_platform_interface:
+    dependency: transitive
+    description:
+      name: cloud_firestore_platform_interface
+      sha256: "9cb7d350c08c3d4987d34f418037aca3882649cdad5158440b4b932232edcf82"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.2"
+  cloud_firestore_web:
+    dependency: transitive
+    description:
+      name: cloud_firestore_web
+      sha256: "28db029962ebdcb8caf80f0c109f359ebcefa983b85fb62e5a220b1a577d84b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.12.2"
   collection:
     dependency: transitive
     description:
@@ -127,6 +151,20 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  data_api:
+    dependency: "direct main"
+    description:
+      path: "packages/data_api"
+      relative: true
+    source: path
+    version: "0.1.0+1"
+  data_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/data_repository"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   diff_match_patch:
     dependency: transitive
     description:
@@ -160,7 +198,7 @@ packages:
     source: hosted
     version: "7.0.0"
   firebase_auth:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: firebase_auth
       sha256: "63b4401c95ddb00fb272872c451147e33509e80eed43937369910ef6c34c00b7"
@@ -214,6 +252,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.16.0"
+  firebase_data_api:
+    dependency: "direct main"
+    description:
+      path: "packages/firebase_data_api"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   flutter:
     dependency: "direct main"
     description: flutter

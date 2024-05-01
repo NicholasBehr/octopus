@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:auth_repository/auth_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:data_repository/data_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:meta/meta.dart';
@@ -10,9 +12,12 @@ part 'app_state.dart';
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({
     required AuthRepository authRepository,
+    required DataRepository dataRepository,
   })  : _authRepository = authRepository,
+        _dataRepository = dataRepository,
         super(AppState()) {
     on<AppAuthUpdateRecieved>(_onAuthUpdateRecieved);
+    on<AppUserDataRecieved>(_onUserDataRecieved);
     on<AppSignOutRequested>(_onSignOutRequested);
     _authRepository.getAuthUpdates().forEach(
           (authUpdate) => add(AppAuthUpdateRecieved(authUpdate: authUpdate)),
@@ -20,17 +25,41 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   final AuthRepository _authRepository;
+  final DataRepository _dataRepository;
 
-  Future<void> _onAuthUpdateRecieved(
+  StreamSubscription<UserData>? _userDataSubscription;
+
+  void _onAuthUpdateRecieved(
     AppAuthUpdateRecieved event,
     Emitter<AppState> emit,
-  ) async {
+  ) {
     switch (event.authUpdate) {
       case Right(value: final user):
         emit(AppState(user: user));
+
+        if (user != null) {
+          _userDataSubscription =
+              _dataRepository.getUserDataStream(user.uid).listen(
+                    (userData) => add(AppUserDataRecieved(userData: userData)),
+                  );
+        } else {
+          _userDataSubscription?.cancel();
+        }
       case Left(value: final _):
         emit(AppState());
+        _userDataSubscription?.cancel();
     }
+  }
+
+  void _onUserDataRecieved(
+    AppUserDataRecieved event,
+    Emitter<AppState> emit,
+  ) {
+    final userData = event.userData;
+    final hasCompletedOnboarding = userData.hasCompletedOnboarding;
+    emit(state.copyWith(
+      hasCompletedOnboarding: hasCompletedOnboarding,
+    ));
   }
 
   Future<void> _onSignOutRequested(
@@ -38,5 +67,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) async {
     await _authRepository.signOut();
+  }
+
+  @override
+  Future<void> close() async {
+    await _userDataSubscription?.cancel();
+    return super.close();
   }
 }

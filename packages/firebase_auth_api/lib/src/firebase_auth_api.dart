@@ -6,7 +6,7 @@ import 'package:rxdart/rxdart.dart';
 /// {@template firebase_auth_api}
 /// A Flutter implementation of the AuthApi that uses firebase.
 /// {@endtemplate}
-class FirebaseAuthApi extends auth_api.AuthApi {
+class FirebaseAuthApi implements auth_api.AuthApi {
   /// {@macro firebase_auth_api}
   FirebaseAuthApi({firebase.FirebaseAuth? firebaseAuth})
       : _firebaseAuth = firebaseAuth ?? firebase.FirebaseAuth.instance {

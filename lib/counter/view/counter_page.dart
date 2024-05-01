@@ -61,9 +61,12 @@ class CounterView extends StatelessWidget {
           const SizedBox(height: 8),
           FloatingActionButton(
             heroTag: null,
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const CounterPage()),
+            onPressed: () => Navigator.of(context).push<bool>(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return const CounterPage();
+                },
+              ),
             ),
             child: const Icon(Icons.add),
           ),
