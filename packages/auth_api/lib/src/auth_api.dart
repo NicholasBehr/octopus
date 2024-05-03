@@ -4,8 +4,8 @@ import 'package:fpdart/fpdart.dart';
 import 'package:rxdart/subjects.dart';
 
 /// Used to convey changes to auth state,
-/// [User] can be null if signed out
-typedef AuthUpdate = Either<AuthFailure, User?>;
+/// [UserAuth] can be null if signed out
+typedef AuthUpdate = Either<AuthFailure, UserAuth?>;
 
 /// {@template auth_api}
 /// The interface and models for an API providing user authentication.
@@ -19,30 +19,26 @@ class AuthApi {
 
   final firebase.FirebaseAuth _firebaseAuth;
 
+  // Broadcast StreamController
   final _authStreamController = BehaviorSubject<AuthUpdate>.seeded(
     AuthUpdate.of(null),
-    onListen: () {
-      print('A new listener has subscribed.');
-    },
   );
 
   void _init() {
-    _firebaseAuth.authStateChanges().forEach(
-          (firebaseUser) => _authStreamController.add(
-            AuthUpdate.right(
-              firebaseUser != null ? User.fromFirebase(firebaseUser) : null,
+    _authStreamController.addStream(
+      _firebaseAuth.authStateChanges().map(
+            (firebaseUser) => AuthUpdate.right(
+              firebaseUser != null ? UserAuth.fromFirebase(firebaseUser) : null,
             ),
           ),
-        );
+    );
   }
 
   /// Provides a live singe subscriber [Stream] of [AuthUpdate].
-  ///
-  /// Remember to cancel any StreamSubscription!
   Stream<AuthUpdate> getAuthUpdates() {
     return _firebaseAuth.authStateChanges().map(
           (firebaseUser) => AuthUpdate.right(
-            firebaseUser != null ? User.fromFirebase(firebaseUser) : null,
+            firebaseUser != null ? UserAuth.fromFirebase(firebaseUser) : null,
           ),
         );
   }

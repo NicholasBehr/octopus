@@ -9,14 +9,14 @@ final class AppState extends Equatable {
         isVerified = user?.emailVerified ?? false,
         hasCompletedOnboarding = hasCompletedOnboarding ?? false;
 
-  final User? user;
+  final UserAuth? user;
   final bool isAuthenticated;
   final bool isVerified;
   final bool hasCompletedOnboarding;
 
-  /// Returns a copy of this `AppState` with the given values updated.
+  /// Returns a copy of this [AppState] with the given values updated.
   AppState copyWith({
-    User? user,
+    UserAuth? user,
     bool? hasCompletedOnboarding,
   }) {
     return AppState(
@@ -27,7 +27,8 @@ final class AppState extends Equatable {
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
+        user,
         isAuthenticated,
         isVerified,
         hasCompletedOnboarding,

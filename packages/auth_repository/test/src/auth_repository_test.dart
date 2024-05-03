@@ -11,7 +11,7 @@ void main() {
   group('AuthRepository', () {
     late AuthApi api;
 
-    final user = User(uid: '1');
+    final user = UserAuth(uid: '1');
 
     setUp(() {
       api = MockAuthApi();

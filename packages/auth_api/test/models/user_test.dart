@@ -4,12 +4,12 @@ import 'package:test/test.dart';
 
 void main() {
   group('AuthApi', () {
-    User createSubject({
+    UserAuth createSubject({
       String uid = '1',
       String? displayName = 'Mark',
       String? email = 'mark@mail.ch',
     }) {
-      return User(
+      return UserAuth(
         uid: uid,
         displayName: displayName,
         email: email,

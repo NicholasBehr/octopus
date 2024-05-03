@@ -3,20 +3,17 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:meta/meta.dart';
 
 @immutable
-class User extends Equatable {
-  const User({
+class UserAuth extends Equatable {
+  const UserAuth({
     required this.uid,
-    String? displayName,
-    String? email,
-    bool? emailVerified,
-  })  : displayName = displayName ?? '',
-        email = email ?? '',
-        emailVerified = emailVerified ?? false,
-        assert(uid != '', 'uid cannot be empty');
+    this.displayName,
+    this.email,
+    this.emailVerified,
+  }) : assert(uid != '', 'uid cannot be empty');
 
-  /// Create [User] model from firebase [firebase.User]
-  factory User.fromFirebase(firebase.User firebaseUser) {
-    return User(
+  /// Create [UserAuth] model from firebase [firebase.User]
+  factory UserAuth.fromFirebase(firebase.User firebaseUser) {
+    return UserAuth(
       uid: firebaseUser.uid,
       email: firebaseUser.email,
       displayName: firebaseUser.displayName,
@@ -30,22 +27,22 @@ class User extends Equatable {
   final String uid;
 
   /// The display name associated with the user
-  final String displayName;
+  final String? displayName;
 
   /// The email associated with the user
-  final String email;
+  final String? email;
 
   /// Is the email of the user verified?
-  final bool emailVerified;
+  final bool? emailVerified;
 
-  /// Returns a copy of this `user` with the given values updated.
-  User copyWith({
+  /// Returns a copy of this [UserAuth] with the given values updated.
+  UserAuth copyWith({
     String? uid,
     String? displayName,
     String? email,
     bool? emailVerified,
   }) {
-    return User(
+    return UserAuth(
       uid: uid ?? this.uid,
       displayName: displayName ?? this.displayName,
       email: email ?? this.email,
@@ -54,5 +51,5 @@ class User extends Equatable {
   }
 
   @override
-  List<Object> get props => [uid, displayName, email, emailVerified];
+  List<Object?> get props => [uid, displayName, email, emailVerified];
 }

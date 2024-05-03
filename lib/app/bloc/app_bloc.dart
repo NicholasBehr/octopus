@@ -3,8 +3,8 @@ import 'package:auth_repository/auth_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:data_repository/data_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:meta/meta.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
@@ -32,7 +32,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   void _onAuthUpdateRecieved(
     AppAuthUpdateRecieved event,
     Emitter<AppState> emit,
-  ) async {
+  ) {
     switch (event.authUpdate) {
       case Right(value: final user):
         emit(AppState(user: user));
@@ -42,14 +42,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
               _dataRepository.getUserDataStream(user.uid).listen(
                     (userData) => add(AppUserDataRecieved(userData: userData)),
                   );
-
-          final test = await _dataRepository.getTransactionPage(
-            '57ZuPDHlYrZltlOaIWZN',
-            1,
-            20,
-          );
-
-          print(test);
         } else {
           _userDataSubscription?.cancel();
         }
@@ -65,9 +57,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ) {
     final userData = event.userData;
     final hasCompletedOnboarding = userData.hasCompletedOnboarding;
-    emit(state.copyWith(
-      hasCompletedOnboarding: hasCompletedOnboarding,
-    ));
+    emit(
+      state.copyWith(
+        hasCompletedOnboarding: hasCompletedOnboarding,
+      ),
+    );
   }
 
   Future<void> _onSignOutRequested(

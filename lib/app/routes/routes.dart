@@ -2,9 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:octopus/app/bloc/app_bloc.dart';
-import 'package:octopus/counter/counter.dart';
+import 'package:octopus/home/home.dart';
 import 'package:octopus/login/login.dart';
-import 'package:octopus/transactions/transactions.dart';
 
 class AppRouter {
   static final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -21,7 +20,7 @@ class AppRouter {
       ),
       GoRoute(
         path: '/home',
-        builder: (context, state) => const CounterPage(),
+        builder: (context, state) => const HomePage(),
       ),
     ],
     redirect: (context, state) {

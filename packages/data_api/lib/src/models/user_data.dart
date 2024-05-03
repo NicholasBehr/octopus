@@ -6,9 +6,8 @@ import 'package:flutter/foundation.dart';
 class UserData extends Equatable {
   const UserData({
     required this.uid,
-    bool? hasCompletedOnboarding,
-  })  : hasCompletedOnboarding = hasCompletedOnboarding ?? false,
-        assert(uid != '', 'uid cannot be empty');
+    this.hasCompletedOnboarding,
+  }) : assert(uid != '', 'uid cannot be empty');
 
   /// Create [UserData] model from firebase [DocumentSnapshot]
   factory UserData.fromFirestore(
@@ -30,7 +29,19 @@ class UserData extends Equatable {
   final String uid;
 
   /// Has the onboarding flow been completed/skipped by this user?
-  final bool hasCompletedOnboarding;
+  final bool? hasCompletedOnboarding;
+
+  /// Returns a copy of this [UserData] with the given values updated.
+  UserData copyWith({
+    String? uid,
+    bool? hasCompletedOnboarding,
+  }) {
+    return UserData(
+      uid: uid ?? this.uid,
+      hasCompletedOnboarding:
+          hasCompletedOnboarding ?? this.hasCompletedOnboarding,
+    );
+  }
 
   /// Create firebase json from [UserData] model
   Map<String, dynamic> toFirestore() {
@@ -40,5 +51,5 @@ class UserData extends Equatable {
   }
 
   @override
-  List<Object> get props => [uid, hasCompletedOnboarding];
+  List<Object?> get props => [uid, hasCompletedOnboarding];
 }
