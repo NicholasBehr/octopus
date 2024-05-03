@@ -17,6 +17,13 @@ class DataRepository {
   Stream<UserData> getUserDataStream(String uid) =>
       _dataApi.getUserDataStream(uid);
 
-  /// (Over-)writes the provided [UserData] to the database.
+  /// (Over-)writes the provided [UserData] into the database.
   Future<void> setUserData(UserData userData) => _dataApi.setUserData(userData);
+
+  Future<List<TransactionData>> getTransactionPage(
+    String account,
+    int page,
+    int limit,
+  ) =>
+      _dataApi.getTransactionPage(account, page, limit);
 }
