@@ -11,6 +11,8 @@ class DataApi {
 
   final FirebaseFirestore _firebaseFirestore;
 
+  /// -- UserData --
+
   /// Provides a live singe subscriber [Stream] of [UserData] from the database.
   /// Provides default [UserData] opbject if there is no database entry.
   Stream<UserData> getUserDataStream(String uid) {
@@ -42,6 +44,10 @@ class DataApi {
         )
         .set(userData);
   }
+
+  // -- AccountData --
+
+  // -- TransactionData --
 
   Future<List<TransactionData>> getTransactionPage(
     String account,

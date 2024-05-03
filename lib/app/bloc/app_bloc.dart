@@ -15,7 +15,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     required DataRepository dataRepository,
   })  : _authRepository = authRepository,
         _dataRepository = dataRepository,
-        super(AppState()) {
+        super(const AppState()) {
     on<AppAuthUpdateRecieved>(_onAuthUpdateRecieved);
     on<AppUserDataRecieved>(_onUserDataRecieved);
     on<AppSignOutRequested>(_onSignOutRequested);
@@ -35,7 +35,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ) {
     switch (event.authUpdate) {
       case Right(value: final user):
-        emit(AppState(user: user));
+        emit(AppState(userAuth: user));
 
         if (user != null) {
           _userDataSubscription =
@@ -46,7 +46,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           _userDataSubscription?.cancel();
         }
       case Left(value: final _):
-        emit(AppState());
+        emit(const AppState());
         _userDataSubscription?.cancel();
     }
   }
@@ -54,15 +54,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   void _onUserDataRecieved(
     AppUserDataRecieved event,
     Emitter<AppState> emit,
-  ) {
-    final userData = event.userData;
-    final hasCompletedOnboarding = userData.hasCompletedOnboarding;
-    emit(
-      state.copyWith(
-        hasCompletedOnboarding: hasCompletedOnboarding,
-      ),
-    );
-  }
+  ) =>
+      emit(state.copyWith(userData: event.userData));
 
   Future<void> _onSignOutRequested(
     AppSignOutRequested event,

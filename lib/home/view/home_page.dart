@@ -28,8 +28,8 @@ class UserText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final count =
-        context.select((AppBloc bloc) => bloc.state.hasCompletedOnboarding);
+    final count = context
+        .select((AppBloc bloc) => bloc.state.userData?.ownAccounts ?? 'none');
     return Text('$count', style: theme.textTheme.displayLarge);
   }
 }

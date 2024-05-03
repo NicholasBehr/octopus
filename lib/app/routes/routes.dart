@@ -25,7 +25,7 @@ class AppRouter {
     ],
     redirect: (context, state) {
       final appBloc = BlocProvider.of<AppBloc>(context);
-      final isAuthenticated = appBloc.state.isAuthenticated;
+      final isAuthenticated = appBloc.state.isAuthenticated();
 
       // 1. authentication guard clause
       if (!isAuthenticated) {

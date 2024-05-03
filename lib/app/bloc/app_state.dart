@@ -2,35 +2,34 @@ part of 'app_bloc.dart';
 
 @immutable
 final class AppState extends Equatable {
-  AppState({
-    this.user,
-    bool? hasCompletedOnboarding,
-  })  : isAuthenticated = user != null,
-        isVerified = user?.emailVerified ?? false,
-        hasCompletedOnboarding = hasCompletedOnboarding ?? false;
+  const AppState({
+    this.userAuth,
+    this.userData,
+  });
 
-  final UserAuth? user;
-  final bool isAuthenticated;
-  final bool isVerified;
-  final bool hasCompletedOnboarding;
+  // auth repository
+  final UserAuth? userAuth;
+  bool isAuthenticated() => userAuth != null;
+  bool isVerified() => userAuth?.emailVerified ?? false;
+
+  // data repository
+  final UserData? userData;
+  bool hasCompletedOnboarding() => userData?.hasCompletedOnboarding ?? false;
 
   /// Returns a copy of this [AppState] with the given values updated.
   AppState copyWith({
-    UserAuth? user,
-    bool? hasCompletedOnboarding,
+    UserAuth? userAuth,
+    UserData? userData,
   }) {
     return AppState(
-      user: user ?? this.user,
-      hasCompletedOnboarding:
-          hasCompletedOnboarding ?? this.hasCompletedOnboarding,
+      userAuth: userAuth ?? this.userAuth,
+      userData: userData ?? this.userData,
     );
   }
 
   @override
   List<Object?> get props => [
-        user,
-        isAuthenticated,
-        isVerified,
-        hasCompletedOnboarding,
+        userAuth,
+        userData,
       ];
 }
