@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 @immutable
 class TransactionData extends Equatable {
   const TransactionData({
-    this.uid,
+    required this.uid,
     this.transactionDate,
     this.transactionValue,
   }) : assert(uid != '', 'uid cannot be empty');
@@ -27,9 +27,8 @@ class TransactionData extends Equatable {
 
   /// The unique identifier of the transaction within the account.
   ///
-  /// Can be null if the transaction is not in the database
   /// Cannot be empty
-  final String? uid;
+  final String uid;
 
   /// This is the date on which the actual transaction occurs.
   /// It is the day when goods are sold, services are rendered,

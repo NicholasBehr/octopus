@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
-      body: const Center(child: UserText()),
+      body: const HomePageBody(),
       floatingActionButton: FloatingActionButton(
         heroTag: null,
         onPressed: () => context.read<AuthRepository>().signOut(),
@@ -22,14 +22,13 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class UserText extends StatelessWidget {
-  const UserText({super.key});
+class HomePageBody extends StatelessWidget {
+  const HomePageBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final count = context
-        .select((AppBloc bloc) => bloc.state.userData?.ownAccounts ?? 'none');
-    return Text('$count', style: theme.textTheme.displayLarge);
+    return ListTile(
+      title: Text('test'),
+    );
   }
 }
