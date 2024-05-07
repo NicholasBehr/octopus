@@ -1,0 +1,23 @@
+name: api_auth_firebase
+description: A Flutter implementation of the AuthApi that uses google firebase.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: "^3.3.0"
+  flutter: "^3.19.0"
+
+dependencies:
+  api_auth:
+    path: ../api_auth
+  firebase_auth: ^4.19.2
+  firebase_core: ^2.30.0
+  flutter:
+    sdk: flutter
+  meta: ^1.11.0
+
+dev_dependencies:
+  firebase_auth_mocks: ^0.13.0
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^5.1.0

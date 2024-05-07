@@ -1,6 +1,6 @@
-import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:repository_user/repository_user.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -13,7 +13,7 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Sign Up')),
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
-            context.read<AuthRepository>().signInWithEmailAndPassword(
+            context.read<RepositoryUser>().signInWithEmailAndPassword(
                   email: 'test@mail.ch',
                   password: 'password123',
                 ),

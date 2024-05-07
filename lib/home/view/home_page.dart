@@ -1,7 +1,6 @@
-import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:octopus/app/bloc/app_bloc.dart';
+import 'package:repository_user/repository_user.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -15,7 +14,7 @@ class HomePage extends StatelessWidget {
       body: const HomePageBody(),
       floatingActionButton: FloatingActionButton(
         heroTag: null,
-        onPressed: () => context.read<AuthRepository>().signOut(),
+        onPressed: () => context.read<RepositoryUser>().signOut(),
         child: const Icon(Icons.exit_to_app),
       ),
     );
@@ -27,7 +26,7 @@ class HomePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return const ListTile(
       title: Text('test'),
     );
   }

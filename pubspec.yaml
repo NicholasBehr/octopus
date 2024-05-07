@@ -19,15 +19,19 @@ dependencies:
   equatable: ^2.0.5
   go_router: ^13.2.4
 
-  auth_repository:
-    path: packages/auth_repository
-  auth_api:
-    path: packages/auth_api
+  api_auth:
+    path: packages/api_auth
+  api_auth_firebase:
+    path: packages/api_auth_firebase
 
-  data_repository:
-    path: packages/data_repository
-  data_api:
-    path: packages/data_api
+
+  api_data:
+    path: packages/api_data
+  api_data_firestore:
+    path: packages/api_data_firestore
+
+  repository_user:
+    path: packages/repository_user
 
 dev_dependencies:
   bloc_test: ^9.1.6

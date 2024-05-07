@@ -1,72 +1,37 @@
 import 'dart:async';
-import 'package:auth_repository/auth_repository.dart';
+
 import 'package:bloc/bloc.dart';
-import 'package:data_repository/data_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:fpdart/fpdart.dart';
+import 'package:repository_user/repository_user.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({
-    required AuthRepository authRepository,
-    required DataRepository dataRepository,
-  })  : _authRepository = authRepository,
-        _dataRepository = dataRepository,
+    required RepositoryUser repositoryUser,
+  })  : _repositoryUser = repositoryUser,
         super(const AppState()) {
-    on<AppAuthUpdateRecieved>(_onAuthUpdateRecieved);
-    on<AppUserDataRecieved>(_onUserDataRecieved);
-    on<AppSignOutRequested>(_onSignOutRequested);
-    _authRepository.getAuthUpdates().forEach(
-          (authUpdate) => add(AppAuthUpdateRecieved(authUpdate: authUpdate)),
-        );
+    on<AppUserUpdateRecieved>(_onAppUserUpdateRecieved);
+    _userStreamSubscription = _repositoryUser
+        .getUserDataStream()
+        .listen((user) => add(AppUserUpdateRecieved(user: user)));
   }
 
-  final AuthRepository _authRepository;
-  final DataRepository _dataRepository;
+  final RepositoryUser _repositoryUser;
+  late StreamSubscription<User?> _userStreamSubscription;
 
-  StreamSubscription<UserData>? _userDataSubscription;
-
-  void _onAuthUpdateRecieved(
-    AppAuthUpdateRecieved event,
+  void _onAppUserUpdateRecieved(
+    AppUserUpdateRecieved event,
     Emitter<AppState> emit,
   ) {
-    switch (event.authUpdate) {
-      case Right(value: final user):
-        emit(AppState(userAuth: user));
-
-        if (user != null) {
-          _userDataSubscription =
-              _dataRepository.getUserDataStream(user.uid).listen(
-                    (userData) => add(AppUserDataRecieved(userData: userData)),
-                  );
-        } else {
-          _userDataSubscription?.cancel();
-        }
-      case Left(value: final _):
-        emit(const AppState());
-        _userDataSubscription?.cancel();
-    }
-  }
-
-  void _onUserDataRecieved(
-    AppUserDataRecieved event,
-    Emitter<AppState> emit,
-  ) =>
-      emit(state.copyWith(userData: event.userData));
-
-  Future<void> _onSignOutRequested(
-    AppSignOutRequested event,
-    Emitter<AppState> emit,
-  ) async {
-    await _authRepository.signOut();
+    emit(AppState(user: event.user));
   }
 
   @override
   Future<void> close() async {
-    await _userDataSubscription?.cancel();
+    await _userStreamSubscription.cancel();
     return super.close();
   }
 }

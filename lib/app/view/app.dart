@@ -1,32 +1,27 @@
-import 'package:auth_repository/auth_repository.dart';
-import 'package:data_repository/data_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:octopus/app/bloc/app_bloc.dart';
 import 'package:octopus/app/routes/routes.dart';
 import 'package:octopus/l10n/l10n.dart';
+import 'package:repository_user/repository_user.dart';
 
 class App extends StatelessWidget {
   const App({
-    required this.authRepository,
-    required this.dataRepository,
+    required this.repositoryUser,
     super.key,
   });
 
-  final AuthRepository authRepository;
-  final DataRepository dataRepository;
+  final RepositoryUser repositoryUser;
 
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<AuthRepository>(create: (context) => authRepository),
-        RepositoryProvider<DataRepository>(create: (context) => dataRepository),
+        RepositoryProvider<RepositoryUser>(create: (context) => repositoryUser),
       ],
       child: BlocProvider(
         create: (_) => AppBloc(
-          authRepository: authRepository,
-          dataRepository: dataRepository,
+          repositoryUser: repositoryUser,
         ),
         child: const AppView(),
       ),

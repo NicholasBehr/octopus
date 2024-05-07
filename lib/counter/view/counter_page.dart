@@ -1,8 +1,8 @@
-import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:octopus/counter/counter.dart';
 import 'package:octopus/l10n/l10n.dart';
+import 'package:repository_user/repository_user.dart';
 
 class CounterPage extends StatelessWidget {
   const CounterPage({super.key});
@@ -46,7 +46,7 @@ class CounterView extends StatelessWidget {
           FloatingActionButton(
             heroTag: null,
             onPressed: () =>
-                context.read<AuthRepository>().signInWithEmailAndPassword(
+                context.read<RepositoryUser>().signInWithEmailAndPassword(
                       email: 'test@mail.ch',
                       password: 'password123',
                     ),
@@ -55,7 +55,7 @@ class CounterView extends StatelessWidget {
           const SizedBox(height: 8),
           FloatingActionButton(
             heroTag: null,
-            onPressed: () => context.read<AuthRepository>().signOut(),
+            onPressed: () => context.read<RepositoryUser>().signOut(),
             child: const Icon(Icons.exit_to_app),
           ),
           const SizedBox(height: 8),
