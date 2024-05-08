@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:api_auth/api_auth.dart' as auth;
-import 'package:api_data/api_data.dart' as data;
+import 'package:api_auth/api_auth.dart';
+import 'package:api_data/api_data.dart';
 import 'package:repository_user/repository_user.dart';
 import 'package:repository_user/src/models/user.dart';
 
@@ -14,40 +14,47 @@ class RepositoryUser {
     required this.apiData,
   });
 
-  final auth.ApiAuth apiAuth;
-  final data.ApiData apiData;
+  final ApiAuth apiAuth;
+  final ApiData apiData;
 
-  Stream<User?> getUserDataStream() {
+  Stream<User?> getUserStream() {
     late StreamController<User?> controller;
 
-    StreamSubscription<auth.User?>? authStream;
-    StreamSubscription<data.User>? dataStream;
-    User? user;
+    StreamSubscription<AuthUser?>? authStream;
+    StreamSubscription<DataUser>? dataStream;
 
-    void onData(data.User dataUser) {
-      controller.add(user?.copyWith(dataUser: dataUser));
+    void onData(AuthUser authUser, DataUser dataUser) {
+      // id match guard clause
+      if (authUser.id != dataUser.id) return;
+
+      // sign in (part 2 of 2)
+      // notify subscribers about sign in
+      controller.add(User(authUser: authUser, dataUser: dataUser));
     }
 
-    void onAuth(auth.User? authUser) {
-      if (authUser == null) {
-        // signed out
-        user = null;
-        dataStream?.cancel();
-      } else {
-        // signed in
-        user = User(authUser: authUser);
-        dataStream = apiData.getUserStream(authUser.id).listen(onData);
+    Future<void> onAuth(AuthUser? authUser) async {
+      // sign in (part 1 of 2)
+      if (authUser != null) {
+        dataStream = apiData
+            .getDataUserStream(authUser.id)
+            .listen((dataUser) => onData(authUser, dataUser));
       }
-      controller.add(user);
+      // sign out
+      else {
+        // clean up old user, wait for all onData to finish
+        await dataStream?.cancel();
+        // notify subscribers about sign out
+        controller.add(null);
+      }
     }
 
     void onStart() {
-      authStream = apiAuth.getUserStream().listen(onAuth);
+      authStream = apiAuth.getAuthUserStream().listen(onAuth);
     }
 
-    void onStop() {
-      authStream?.cancel();
-      dataStream?.cancel();
+    Future<void> onStop() async {
+      await authStream?.cancel();
+      await dataStream?.cancel();
     }
 
     controller = StreamController<User?>(

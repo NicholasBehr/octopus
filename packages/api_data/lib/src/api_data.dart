@@ -7,12 +7,12 @@ abstract class ApiData {
   /// {@macro api_data}
   const ApiData();
 
-  /// Provides a realtime [Stream] of [User] from the database.
-  /// Provides default [User] opbject if there is no database entry.
+  /// Provides a realtime [Stream] of [DataUser] from the database.
+  /// Provides default [DataUser] opbject if there is no database entry.
   ///
   /// Remember to cancel subscription to fee resources!
-  Stream<User> getUserStream(String id);
+  Stream<DataUser> getDataUserStream(String id);
 
-  /// (Over-)writes the provided [User] into the database.
-  Future<void> setUserData(User userData);
+  /// (Over-)writes the provided [DataUser] into the database.
+  Future<void> setUserData(DataUser userData);
 }

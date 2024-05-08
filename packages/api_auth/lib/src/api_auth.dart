@@ -4,10 +4,10 @@ import 'package:api_auth/api_auth.dart';
 abstract class ApiAuth {
   const ApiAuth();
 
-  /// Provides a live [Stream] of [User] updates from online user account.
+  /// Provides a live [Stream] of [AuthUser] updates from online user account.
   ///
-  /// Note that the [User] may be null if not signed in.
-  Stream<User?> getUserStream();
+  /// Note that the [AuthUser] may be null if not signed in.
+  Stream<AuthUser?> getAuthUserStream();
 
   /// Tries to create a new 'user'
   /// with the given email address and password.

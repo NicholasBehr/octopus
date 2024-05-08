@@ -7,12 +7,10 @@ final class AppState extends Equatable {
   });
 
   final User? user;
-  bool isAuthenticated() => user != null;
 
-  bool isVerified() => user?.authUser.emailVerified ?? false;
-
-  bool hasCompletedOnboarding() =>
-      user?.dataUser.hasCompletedOnboarding ?? false;
+  bool get isAuthenticated => user != null;
+  bool get isVerified => user?.emailVerified ?? false;
+  bool get hasCompletedOnboarding => user?.hasCompletedOnboarding ?? false;
 
   @override
   List<Object?> get props => [user];

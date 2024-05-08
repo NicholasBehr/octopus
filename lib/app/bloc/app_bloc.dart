@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -15,7 +14,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         super(const AppState()) {
     on<AppUserUpdateRecieved>(_onAppUserUpdateRecieved);
     _userStreamSubscription = _repositoryUser
-        .getUserDataStream()
+        .getUserStream()
         .listen((user) => add(AppUserUpdateRecieved(user: user)));
   }
 

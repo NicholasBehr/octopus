@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-class User extends Equatable {
-  const User({
+class AuthUser extends Equatable {
+  const AuthUser({
     required this.id,
     String? name,
     String? email,

@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'data_user.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-User _$UserFromJson(Map<String, dynamic> json) => User(
+DataUser _$UserFromJson(Map<String, dynamic> json) => DataUser(
       hasCompletedOnboarding: json['hasCompletedOnboarding'] as bool? ?? false,
       ownAccounts: (json['ownAccounts'] as List<dynamic>?)
               ?.map((e) => e as String)
@@ -14,7 +14,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           const <String>[],
     );
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$UserToJson(DataUser instance) => <String, dynamic>{
       'hasCompletedOnboarding': instance.hasCompletedOnboarding,
       'ownAccounts': instance.ownAccounts,
     };

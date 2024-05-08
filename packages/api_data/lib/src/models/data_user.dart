@@ -4,12 +4,12 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
-part 'user.g.dart';
+part 'data_user.g.dart';
 
 @immutable
 @JsonSerializable()
-class User extends Equatable {
-  User({
+class DataUser extends Equatable {
+  DataUser({
     String? id,
     this.hasCompletedOnboarding = false,
     this.ownAccounts = const <String>[],
@@ -19,7 +19,7 @@ class User extends Equatable {
         ),
         id = id ?? const Uuid().v8();
 
-  /// The unique identifier of the 'user'.
+  /// The unique identifier of the user.
   ///
   /// Cannot be empty
   @JsonKey(includeToJson: false, includeFromJson: false)
@@ -36,12 +36,12 @@ class User extends Equatable {
   final List<String> ownAccounts;
 
   /// Returns a copy of this `user` with the given values updated.
-  User copyWith({
+  DataUser copyWith({
     String? id,
     bool? hasCompletedOnboarding,
     List<String>? ownAccounts,
   }) {
-    return User(
+    return DataUser(
       id: id ?? this.id,
       hasCompletedOnboarding:
           hasCompletedOnboarding ?? this.hasCompletedOnboarding,
@@ -49,11 +49,11 @@ class User extends Equatable {
     );
   }
 
-  /// Deserializes the given [JsonMap] into a [User].
-  static User fromJson(String id, JsonMap json) =>
+  /// Deserializes the given [JsonMap] into a [DataUser].
+  static DataUser fromJson(String id, JsonMap json) =>
       _$UserFromJson(json).copyWith(id: id);
 
-  /// Converts this [User] into a [JsonMap].
+  /// Converts this [DataUser] into a [JsonMap].
   JsonMap toJson() => _$UserToJson(this);
 
   @override

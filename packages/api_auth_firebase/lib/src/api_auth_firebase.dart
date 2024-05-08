@@ -11,7 +11,7 @@ class ApiAuthFirebase implements ApiAuth {
   final firebase.FirebaseAuth _firebaseAuth;
 
   @override
-  Stream<User?> getUserStream() => _firebaseAuth
+  Stream<AuthUser?> getAuthUserStream() => _firebaseAuth
       .authStateChanges()
       .map((firebaseUser) => firebaseUser?.toUser);
 
@@ -65,9 +65,9 @@ class ApiAuthFirebase implements ApiAuth {
 }
 
 extension on firebase.User {
-  /// Maps a [firebase.User] into a [User].
-  User get toUser {
-    return User(
+  /// Maps a [firebase.User] into a [AuthUser].
+  AuthUser get toUser {
+    return AuthUser(
       id: uid,
       name: displayName,
       email: email,

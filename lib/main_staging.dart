@@ -1,12 +1,11 @@
-import 'package:auth_api/auth_api.dart';
-import 'package:auth_repository/auth_repository.dart';
-import 'package:data_api/data_api.dart';
-import 'package:data_repository/data_repository.dart';
+import 'package:api_auth_firebase/api_auth_firebase.dart';
+import 'package:api_data_firestore/api_data_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:octopus/app/app.dart';
 import 'package:octopus/bootstrap.dart';
 import 'package:octopus/firebase_options_dev.dart';
+import 'package:repository_user/repository_user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,18 +13,16 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   /// data layer
-  final authApi = AuthApi();
-  final dataApi = DataApi();
+  final apiAuth = ApiAuthFirebase();
+  final apiData = ApiDataFirestore();
 
   /// domain layer
-  final authRepository = AuthRepository(authApi: authApi);
-  final dataRepository = DataRepository(dataApi: dataApi);
+  final repositoryUser = RepositoryUser(apiAuth: apiAuth, apiData: apiData);
 
   /// feature layer
   await bootstrap(
     () => App(
-      authRepository: authRepository,
-      dataRepository: dataRepository,
+      repositoryUser: repositoryUser,
     ),
   );
 }

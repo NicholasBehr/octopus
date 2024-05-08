@@ -10,22 +10,22 @@ class ApiDataFirestore implements ApiData {
 
   /// -- UserData --
 
-  /// Provides a realtime [Stream] of [User] from the database.
-  /// Provides default [User] opbject if there is no database entry.
+  /// Provides a realtime [Stream] of [DataUser] from the database.
+  /// Provides default [DataUser] opbject if there is no database entry.
   ///
   /// Remember to cancel subscription to fee resources!
   @override
-  Stream<User> getUserStream(String id) {
+  Stream<DataUser> getDataUserStream(String id) {
     return _firebaseFirestore.collection('users').doc(id).snapshots().map(
           (docSnapshot) => docSnapshot.exists
-              ? User.fromJson(id, docSnapshot.data()!)
-              : User(id: id),
+              ? DataUser.fromJson(id, docSnapshot.data()!)
+              : DataUser(id: id),
         );
   }
 
-  /// (Over-)writes the provided [User] into the database.
+  /// (Over-)writes the provided [DataUser] into the database.
   @override
-  Future<void> setUserData(User user) {
+  Future<void> setUserData(DataUser user) {
     return _firebaseFirestore
         .collection('users')
         .doc(user.id)
