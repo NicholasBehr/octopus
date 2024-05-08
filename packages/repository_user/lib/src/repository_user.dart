@@ -10,12 +10,13 @@ import 'package:repository_user/src/models/user.dart';
 class RepositoryUser {
   /// {@macro repository_user}
   const RepositoryUser({
-    required this.apiAuth,
-    required this.apiData,
-  });
+    required ApiAuth apiAuth,
+    required ApiData apiData,
+  })  : _apiAuth = apiAuth,
+        _apiData = apiData;
 
-  final ApiAuth apiAuth;
-  final ApiData apiData;
+  final ApiAuth _apiAuth;
+  final ApiData _apiData;
 
   Stream<User?> getUserStream() {
     late StreamController<User?> controller;
@@ -35,7 +36,7 @@ class RepositoryUser {
     Future<void> onAuth(AuthUser? authUser) async {
       // sign in (part 1 of 2)
       if (authUser != null) {
-        dataStream = apiData
+        dataStream = _apiData
             .getDataUserStream(authUser.id)
             .listen((dataUser) => onData(authUser, dataUser));
       }
@@ -49,7 +50,7 @@ class RepositoryUser {
     }
 
     void onStart() {
-      authStream = apiAuth.getAuthUserStream().listen(onAuth);
+      authStream = _apiAuth.getAuthUserStream().listen(onAuth);
     }
 
     Future<void> onStop() async {
@@ -71,7 +72,7 @@ class RepositoryUser {
     required String email,
     required String password,
   }) =>
-      apiAuth.createUserWithEmailAndPassword(email: email, password: password);
+      _apiAuth.createUserWithEmailAndPassword(email: email, password: password);
 
   /// Attempts to sign into an 'user' account
   /// with the given email address and password.
@@ -81,8 +82,8 @@ class RepositoryUser {
     required String email,
     required String password,
   }) =>
-      apiAuth.signInWithEmailAndPassword(email: email, password: password);
+      _apiAuth.signInWithEmailAndPassword(email: email, password: password);
 
   /// Signs out the 'user'.
-  Future<void> signOut() => apiAuth.signOut();
+  Future<void> signOut() => _apiAuth.signOut();
 }
